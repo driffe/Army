@@ -1,10 +1,14 @@
 "use client";
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {currencyFormatter} from '@/lib/utils'
 import ExpenseCategoryItem from '@/components/ExpenseCategory';
 import Modal from '@/components/Modal';
 import {Chart as ChartJs, ArcElement, Tooltip, Legend} from'chart.js'
 import { Doughnut } from 'react-chartjs-2';
+
+//Firebase
+import { db } from '@/lib/firebase';
+import { collection, addDoc } from 'firebase/firestore';
 
 ChartJs.register(ArcElement, Tooltip, Legend);
 
@@ -36,11 +40,64 @@ const DUMMY_DATA = [
 ];
 
 export default function Home({color, title, total}) {
-const [modalIsOpen, setModalIsOpen] = useState(true);
+const [showAddIncomeModal, setShowAddIncomeModal] = useState(true);
+const amountRef = useRef();
+const descriptionRef = useRef();
+
+//Handler Functions
+const addIncomeHandler = async (e) => {
+  e.preventDefault();
+
+  const newIncome = {
+    amount: amountRef.current.value,
+    description: descriptionRef.current.value,
+    createAt: new Date(),
+  }
+
+  const collectionRef = collection(db, "income")
+  try {
+    const docSnap = await addDoc(collectionRef, newIncome)
+
+  } catch (error) {
+    console.log(error.message);
+  }
+
+};
+
   return (
     <>
-      {/* Modal */}
-      <Modal show={modalIsOpen} onClose={setModalIsOpen}><h3>I'm modal</h3></Modal>
+      {/* Add Income Modal */}
+      <Modal show={showAddIncomeModal} onClose={setShowAddIncomeModal}>
+        <form onSubmit={addIncomeHandler} className='flex flex-col gap-4'>
+          <div className='input-group'>
+            <label htmlFor='amount'>Income amount</label>
+            <input
+              type='number' 
+              name='amount'
+              ref={amountRef}
+              min={0.01} 
+              step={0.01} 
+              placeholder='Enter income amount' 
+              required
+            />
+          </div>
+
+          <div className='flex flex-col gap-4'>
+            <label htmlFor='description'>Description</label>
+            <input
+              name='description'
+              type='text' 
+              ref={descriptionRef}
+              placeholder='Enter income description' 
+              required
+            />
+          </div>
+
+          <button type='submit' className='btn btn-primary'>
+            Add Entry
+          </button>
+        </form>
+      </Modal>
 
       <main className="container max-w-2xl px-6 mx-auto">
         <section className="py-3">
@@ -49,8 +106,15 @@ const [modalIsOpen, setModalIsOpen] = useState(true);
         </section>
 
         <section className="flex items-center gap-2 py-3">
-          <button onClick={() => {setModalIsOpen(true)}} className="btn btn-primary">+ Expense</button>
-          <button className="btn btn-primary-outline">+ Income</button>
+          <button 
+            onClick={() => {
+              
+            }} 
+            className="btn btn-primary">+ Expense</button>
+          <button onClick={() => {
+            setShowAddIncomeModal(true)
+          }} 
+          className="btn btn-primary-outline">+ Income</button>
         </section>
 
         {/* Expense */}
@@ -60,6 +124,7 @@ const [modalIsOpen, setModalIsOpen] = useState(true);
             {DUMMY_DATA.map(expense => {
               return (
                 <ExpenseCategoryItem 
+                  key={expense.id}
                   color={expense.color}
                   title={expense.title}
                   total={expense.total}
