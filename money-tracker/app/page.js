@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {currencyFormatter} from '@/lib/utils'
 import ExpenseCategoryItem from '@/components/ExpenseCategory';
 import Modal from '@/components/Modal';
@@ -8,7 +8,7 @@ import { Doughnut } from 'react-chartjs-2';
 
 //Firebase
 import { db } from '@/lib/firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
 
 ChartJs.register(ArcElement, Tooltip, Legend);
 
@@ -39,30 +39,49 @@ const DUMMY_DATA = [
   },
 ];
 
-export default function Home({color, title, total}) {
-const [showAddIncomeModal, setShowAddIncomeModal] = useState(true);
-const amountRef = useRef();
-const descriptionRef = useRef();
+export default function Home() {
+  const [income, setIncome] = useState([])
+  const [showAddIncomeModal, setShowAddIncomeModal] = useState(true);
+  const amountRef = useRef();
+  const descriptionRef = useRef();
 
-//Handler Functions
-const addIncomeHandler = async (e) => {
-  e.preventDefault();
+  //Handler Functions
+  const addIncomeHandler = async (e) => {
+    e.preventDefault();
 
-  const newIncome = {
-    amount: amountRef.current.value,
-    description: descriptionRef.current.value,
-    createAt: new Date(),
-  }
+    const newIncome = {
+      amount: amountRef.current.value,
+      description: descriptionRef.current.value,
+      createdAt: new Date(),
+    }
 
-  const collectionRef = collection(db, "income")
-  try {
-    const docSnap = await addDoc(collectionRef, newIncome)
-
-  } catch (error) {
-    console.log(error.message);
-  }
+    const collectionRef = collection(db, "income")
+    try {
+      const docSnap = await addDoc(collectionRef, newIncome)
+    } catch (error) {
+      console.log(error.message);
+    }
 
 };
+
+useEffect(() => {
+  const getIncomeData = async () => {
+    console.log(income);
+    const collectionRef = collection(db,'income');
+    const docsSnap = await getDocs(collectionRef);
+
+    const data = docsSnap.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+        createdAt: new Date(doc.data().createdAt.toMillis()),
+      };
+    });
+    setIncome(data)
+  };
+
+  getIncomeData();
+}, [])
 
   return (
     <>
@@ -97,6 +116,23 @@ const addIncomeHandler = async (e) => {
             Add Entry
           </button>
         </form>
+        
+        <div className='flex flex-col gap-4 mt-6'>
+          <h3 className='text-2xl font-bold'>Income History</h3>
+          {income.map((i) => {
+            return (
+              <div className='flex items-center justify-between' key={i.id}>
+                <div>
+                  <p className='font-semibold'>{i.description}</p>
+                  <small>{i.createdAt.toISOString()}</small>
+                </div>
+                <p className='flex items-center gap-2'>
+                  {currencyFormatter.apply(i.amount)}
+                </p>
+              </div>
+            )
+          })}
+        </div>
       </Modal>
 
       <main className="container max-w-2xl px-6 mx-auto">
