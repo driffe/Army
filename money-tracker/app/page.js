@@ -8,7 +8,10 @@ import { Doughnut } from 'react-chartjs-2';
 
 //Firebase
 import { db } from '@/lib/firebase';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, doc, deleteDoc} from 'firebase/firestore';
+
+// Icons
+import {FaRegTrashAlt} from 'react-icons/fa'
 
 ChartJs.register(ArcElement, Tooltip, Legend);
 
@@ -41,7 +44,8 @@ const DUMMY_DATA = [
 
 export default function Home() {
   const [income, setIncome] = useState([])
-  const [showAddIncomeModal, setShowAddIncomeModal] = useState(true);
+  console.log(income);
+  const [showAddIncomeModal, setShowAddIncomeModal] = useState(false);
   const amountRef = useRef();
   const descriptionRef = useRef();
 
@@ -53,35 +57,65 @@ export default function Home() {
       amount: amountRef.current.value,
       description: descriptionRef.current.value,
       createdAt: new Date(),
-    }
+    };
+
+    console.log(newIncome);
 
     const collectionRef = collection(db, "income")
+    
     try {
       const docSnap = await addDoc(collectionRef, newIncome)
+
+      //Update state
+      setIncome(prevState => {
+        return [
+          ...prevState,
+          {
+            id: docSnap.id,
+            ...newIncome,
+          },
+        ];
+      });
+
+      descriptionRef.current.value = "";
+      amountRef.current.value = "";
     } catch (error) {
       console.log(error.message);
     }
-
-};
-
-useEffect(() => {
-  const getIncomeData = async () => {
-    console.log(income);
-    const collectionRef = collection(db,'income');
-    const docsSnap = await getDocs(collectionRef);
-
-    const data = docsSnap.docs.map((doc) => {
-      return {
-        id: doc.id,
-        ...doc.data(),
-        createdAt: new Date(doc.data().createdAt.toMillis()),
-      };
-    });
-    setIncome(data)
   };
 
-  getIncomeData();
-}, [])
+  const deleteIncomeEntryHandler = async (incomeId) => {
+    const docRef = doc(db, 'income', incomeId);
+    try {
+      await deleteDoc(docRef);
+      setIncome(prevState => {
+        return prevState.filter(i => i.id !== incomeId);
+      })
+      //Update State
+
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    const getIncomeData = async () => {
+      const collectionRef = collection(db,'income');
+      const docsSnap = await getDocs(collectionRef);
+
+      const data = docsSnap.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+          createdAt: new Date(),
+          //13:13
+        };
+      });
+      setIncome(data);
+    };
+
+    getIncomeData();
+  }, []);
 
   return (
     <>
@@ -124,10 +158,13 @@ useEffect(() => {
               <div className='flex items-center justify-between' key={i.id}>
                 <div>
                   <p className='font-semibold'>{i.description}</p>
-                  <small>{i.createdAt.toISOString()}</small>
+                  <small>{i.createdAt.toISOString().substring(0, 10)}</small>
                 </div>
                 <p className='flex items-center gap-2'>
-                  {currencyFormatter.apply(i.amount)}
+                  {currencyFormatter(i.amount)}
+                  <button onClick={() => {deleteIncomeEntryHandler(i.id)}}>
+                    <FaRegTrashAlt/>
+                  </button>
                 </p>
               </div>
             )
