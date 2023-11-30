@@ -60,8 +60,9 @@ useEffect(() => {
               setShowAddExpensesModal(true)
             }} 
             className="btn btn-primary">+ Expense</button>
-          <button onClick={() => {
-            setShowAddIncomeModal(true)
+          <button 
+            onClick={() => {
+              setShowAddIncomeModal(true)
           }} 
           className="btn btn-primary-outline">+ Income</button>
         </section>
