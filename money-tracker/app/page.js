@@ -1,10 +1,13 @@
 "use client";
 import { useState, useContext, useEffect } from 'react';
 import { financeContext } from '@/lib/store/finance-context';
+import { authContext } from '@/lib/store/auth-context';
 import { currencyFormatter } from '@/lib/utils'
 import ExpenseCategoryItem from '@/components/ExpenseCategory';
 import AddIncomeModal from '@/components/modals/AddIncomeModal'
 import AddExpensesModal from '@/components/modals/AddExpensesModal'
+import SignIn from '@/components/SignIn';
+
 import { Chart as ChartJs, ArcElement, Tooltip, Legend } from'chart.js'
 import { Doughnut } from 'react-chartjs-2';
 
@@ -18,7 +21,9 @@ export default function Home() {
   const [showAddExpensesModal, setShowAddExpensesModal] = useState(false);
 
   const [balance, setBalance] = useState(0);
-  const {expenses, income} = useContext(financeContext)
+  const {expenses, income} = useContext(financeContext);
+  const {user, loading} = useContext(authContext);
+
 
 useEffect(() => {
   const newBalance = income.reduce((total, i) => {
@@ -30,6 +35,10 @@ useEffect(() => {
 
   setBalance(newBalance);
 },[expenses, income])
+
+  if(!user) {
+    return <SignIn/>
+  }
 
   return (
     <>
