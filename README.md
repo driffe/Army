@@ -19,5 +19,5 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
-[Tailwind.CSS]: https://img.shields.io/badge/Tailwind.CSS-000000?style=for-the-badge&logo=tailwinddotcss&logoColor=white
+[Tailwind.CSS]: https://img.shields.io/badge/tailwind-000000?style=for-the-badge&logo=tailwinddotcss&logoColor=white
 [Tailwind-url]: https://tailwindcss.com/
