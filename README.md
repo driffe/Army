@@ -10,14 +10,55 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
-* [![Next][Next.js]][Next-url]
-* [![TailwindCSS][Tailwind.CSS]][Tailwind-url]
+* ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+* ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+* ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
+* ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 
 
+## Getting Started
 
+To get a local copy up and running follow these simple example steps.
 
+### Prerequisites
 
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[Tailwind.CSS]: https://img.shields.io/badge/tailwind-000000?style=for-the-badge&logo=tailwinddotcss&logoColor=white
-[Tailwind-url]: https://tailwindcss.com/
+* next.js
+```sh
+  npx create-next-app@latest
+```
+Check **No** except Tailwind CSS
+If you didn't see Tailwind CSS select, follow this instruction
+
+*tailwind css
+```sh
+  npm install -D tailwindcss postcss autoprefixer
+  npx tailwindcss init -p
+```
+Add the paths to all of your template files in your tailwind.config.js file.
+```sh
+  module.exports = {
+    content: [
+      "./app/**/*.{js,ts,jsx,tsx,mdx}",
+      "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+      "./components/**/*.{js,ts,jsx,tsx,mdx}",
+   
+      // Or if using `src` directory:
+      "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    ],
+    theme: {
+      extend: {},
+    },
+    plugins: [],
+  }
+```
+Add the @tailwind directives for each of Tailwind’s layers to your globals.css file.
+```sh
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+```
+You can run your build process with
+```sh
+  npm run dev
+```
+And stop your build process with ***Ctrl C***
