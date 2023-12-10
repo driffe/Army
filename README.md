@@ -22,14 +22,14 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-* next.js
+* Next.js
 ```sh
   npx create-next-app@latest
 ```
 Check **No** except Tailwind CSS
 If you didn't see Tailwind CSS select, follow this instruction.
 
-* tailwind css
+* Tailwind Css
 ```sh
   npm install -D tailwindcss postcss autoprefixer
   npx tailwindcss init -p
@@ -62,3 +62,17 @@ You can run your build process with
   npm run dev
 ```
 And stop your build process with ***Ctrl C***.
+* React-icons
+```sh
+  npm install react-icons --save
+```
+Example
+```sh
+  import { FaBeer } from 'react-icons/fa';
+  
+  class Question extends React.Component {
+    render() {
+      return <h3> Lets go for a <FaBeer />? </h3>
+    }
+  }
+```
