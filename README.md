@@ -27,9 +27,9 @@ To get a local copy up and running follow these simple example steps.
   npx create-next-app@latest
 ```
 Check **No** except Tailwind CSS
-If you didn't see Tailwind CSS select, follow this instruction
+If you didn't see Tailwind CSS select, follow this instruction.
 
-*tailwind css
+* tailwind css
 ```sh
   npm install -D tailwindcss postcss autoprefixer
   npx tailwindcss init -p
@@ -61,4 +61,4 @@ You can run your build process with
 ```sh
   npm run dev
 ```
-And stop your build process with ***Ctrl C***
+And stop your build process with ***Ctrl C***.
