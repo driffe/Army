@@ -59,8 +59,8 @@ useEffect(() => {
 
       <main className="container max-w-2xl px-6 mx-auto">
         <section className="py-3">
-          <small className="text-grey-400 text-md">My Balance</small>
-          <h2 className="text-4xl font-blod">{currencyFormatter(balance)}</h2>
+          <small className="text-grey-400 text-lg">My Balance</small>
+          <h2 className="text-4xl font-blod my-3">{currencyFormatter(balance)}</h2>
         </section>
 
         <section className="flex items-center gap-2 py-3">
