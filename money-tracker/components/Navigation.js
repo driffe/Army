@@ -3,6 +3,7 @@
 import { useContext } from 'react'
 import { authContext } from '@/lib/store/auth-context'
 import {ImStatsBars} from 'react-icons/im'
+import { Link } from 'react-scroll';
 
 function Nav(){
     const {user, loading, logout} = useContext(authContext);
@@ -30,9 +31,11 @@ function Nav(){
             {/* Right side fo nav */}
             {user && !loading && (
               <nav className='flex items-center gap-2'>
-                <div>
-                  <ImStatsBars className='text-2xl text-white'/>
-                  </div>
+                <Link to="Chart" spy={true} smooth={true}>
+                  <button>
+                    <ImStatsBars className='text-2xl text-white'/>
+                  </button>
+                </Link>
                 <div>
                   <button onClick={logout} className='btn btn-danger'>Sign out</button>
                 </div>

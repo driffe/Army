@@ -92,7 +92,7 @@ useEffect(() => {
         </section>
 
         {/* Chart Section */}
-        <section className='py-6'>
+        <section className='py-6' id='Chart'>
             <h3 className='text-2xl'>Stats</h3>
             <div className='w-1/2 mx-auto'>
               <Doughnut 
