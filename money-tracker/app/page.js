@@ -104,7 +104,7 @@ useEffect(() => {
                       data: expenses.map(expense => expense.total),
                       backgroundColor: expenses.map(expense => expense.color),
                       borderColor: ["#18181b"],
-                      borderWidth: 5,
+                      borderWidth: 1,
                     },
                   ],
                 }}

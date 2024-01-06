@@ -13,7 +13,7 @@ export const financeContext = createContext({
     removeIncomeItem: async () => {},
     addExpenseItem: async () => {},
     addCategory: async () => {},
-    deleteExpneseItem: async () => {},
+    deleteExpenseItem: async () => {},
     deleteExpenseCategory: async (expenseCategoryId) => {},
 
 });
@@ -69,7 +69,7 @@ export default function FinanceContextProvider({children}) {
       }
     };
 
-    const deleteExpneseItem = async (updatedExpense, expenseCategoryId) => {
+    const deleteExpenseItem = async (updatedExpense, expenseCategoryId) => {
       try {
         const docRef = doc(db, "expenses", expenseCategoryId)
         await updateDoc(docRef, {
@@ -150,7 +150,7 @@ export default function FinanceContextProvider({children}) {
       removeIncomeItem, 
       addExpenseItem, 
       addCategory, 
-      deleteExpneseItem,
+      deleteExpenseItem,
       deleteExpenseCategory,
     };
 
@@ -162,26 +162,27 @@ export default function FinanceContextProvider({children}) {
             const docsSnap = await getDocs(q);
 
             const data = docsSnap.docs.map((doc) => {
-            return {
-                id: doc.id,
-                ...doc.data(),
-                createdAt: new Date(),
-            };
+              return {
+                  id: doc.id,
+                  ...doc.data(),
+                  createdAt: new Date(),
+              };
             });
             setIncome(data);
         };
         const getExpensesData = async () => {
           const collectionRef = collection(db, 'expenses');
-          const docsSnap = await getDocs(collectionRef);
+          const q = query(collectionRef, where("uid", "==", user.uid));
+          const docsSnap = await getDocs(q);
 
           const data = docsSnap.docs.map((doc) => {
             return {
               id: doc.id,
-              ...doc.data()
+              ...doc.data(),
             };
           });
           setExpenses(data);
-        }
+        };
         getIncomeData();
         getExpensesData();
     }, [user]);

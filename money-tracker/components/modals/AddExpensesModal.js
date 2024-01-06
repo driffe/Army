@@ -9,8 +9,8 @@ function AddExpensesModal({show, onClose}) {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [showAddExpense, setShowAddExpense] = useState(false);
     const {expenses, addExpenseItem, addCategory} = useContext(financeContext);
-    const titleRef = useRef();
-    const colorRef = useRef();
+    const titleRef = useRef(null);
+    const colorRef = useRef(null);
 
     const addExpenseItemHandler = async () => {
         const expense = expenses.find(e => {
@@ -100,7 +100,7 @@ function AddExpensesModal({show, onClose}) {
                 )}
 
                 {expenses.map(expense => {
-                    return (//1351
+                    return (
                     <button 
                         key={expense.id}
                         onClick={() => {

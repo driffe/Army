@@ -41,7 +41,7 @@ function ViewExpenseModal({show, onClose, expense}) {
                     return <div key={item.id} className="flex items-center justify-between">
                         <small>
                             {item.createdAt.toMillis
-                            ? new Date(item.createdAt.toMillis()).toISOString()
+                            ? new Date(item.createdAt.toMillis()).toISOString().substring(0, 10)
                             : item.createdAt.toISOString()}
                         </small>
                         <p className="flex items-center gap-2">
