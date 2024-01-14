@@ -5,7 +5,7 @@ import Modal from "../Modal"
 import { FaRegTrashAlt } from "react-icons/fa";
 
 function ViewExpenseModal({show, onClose, expense}) {
-    const {deleteExpneseItem, deleteExpenseCategory} = useContext(financeContext);
+    const {deleteExpenseItem, deleteExpenseCategory} = useContext(financeContext);
     const deleteExpenseHandler = async () => {
         try {
             await deleteExpenseCategory(expense.id)
@@ -23,7 +23,7 @@ function ViewExpenseModal({show, onClose, expense}) {
                 total: expense.total - item.amount,
             };
 
-            await deleteExpneseItem(updatedExpenses, expense.id);
+            await deleteExpenseItem(updatedExpenses, expense.id);
         } catch (error) {
             console.log(error.message)
         }
