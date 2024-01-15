@@ -84,12 +84,12 @@ function AddExpensesModal({show, onClose}) {
                 </div>
                 {showAddExpense && (
                     <div className="flex flex-col items-center justify-between w-full">
-                        <div className="flex justify-between w-full">
-                            <input type="text" placeholder="Enter Title" ref={titleRef}/>
+                        <div className="flex items-center w-full">
+                            <input type="text" className="mr-2" placeholder="Enter Title" ref={titleRef}/>
                             <label>Color:</label>
                             <input type="color" className="w-24 h-10" ref={colorRef}/>
                         </div>
-                        <div className="md:grid w-full justify-items-end">
+                        <div className="grid w-full justify-items-end">
                             <button onClick={addCategorHandler} className="btn btn-primary-outline">Create</button>
                             <button 
                                 onClick={() => {
