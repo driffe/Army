@@ -9,7 +9,7 @@ function SignIn() {
     const { googleLoginHandler } = useContext(authContext);
     const { githubLoginHandler } = useContext(authContext);
     return (
-        <main className="h-svh flex flex-col items-center justify-center container mx-auto">
+        <main className="h-screen flex flex-col items-center justify-center container mx-auto mb-4">
             <h1 className="mb-6 font-bold text-center"><BsPiggyBank className="text-8xl"/></h1>
             <div className="block w-1/2 h-1/2 shadow-md shadow-slate-500 bg-slate-800 rounded-xl">
                 <div className="flex flex-col w-full h-full items-center justify-evenly">

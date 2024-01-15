@@ -8,7 +8,7 @@ import { Link } from 'react-scroll';
 function Nav(){
     const {user, loading, logout} = useContext(authContext);
     return (
-        <header className='container max-w-2xl px-6 mx-auto'>
+        <header className='container max-w-2xl my-3 px-6 mx-auto'>
           <div className='flex items-center justify-between'>
             {/* User Info */}
             {user && !loading && (
