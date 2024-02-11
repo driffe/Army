@@ -55,7 +55,7 @@ function AddExpensesModal({show, onClose}) {
 
     return (
         <Modal show={show} onClose={onClose}> 
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-1'>
                 <label>Enter an amount</label>
                 <input
                     type='number' 
@@ -70,7 +70,7 @@ function AddExpensesModal({show, onClose}) {
             </div>
             {/* Expense Categories */}
             {expenseAmount > 0 && (
-            <div className="flex flex-col gap-4 mt-6">
+            <div className="flex flex-col gap-1">
                 <div className="flex items-center justify-between">
                     <h3 className="text-wxl capitalize">select expense category</h3>
                     <button
@@ -83,19 +83,25 @@ function AddExpensesModal({show, onClose}) {
                     </button>
                 </div>
                 {showAddExpense && (
-                    <div className="flex items-center justify-between">
-                        <input type="text" placeholder="Enter Title" ref={titleRef}/>
-                        <label>Pick Color</label>
-                        <input type="color" className="w-24 h-10" ref={colorRef}/>
-                        <button onClick={addCategorHandler} className="btn btn-primary-outline">Create</button>
-                        <button 
-                            onClick={() => {
-                                setShowAddExpense(false)
-                            }} 
-                            className="btn btn-danger"
-                        >
-                            Cancel
-                        </button>
+                    <div className="flex flex-col">
+                        <input type="text" className="block w-auto" placeholder="Enter Expense Title" ref={titleRef}/>
+                        <div className="flex flex-row justify-around items-center">
+                            <div>
+                                <label>Color:  </label>
+                                <input type="color" className="w-24 h-10" ref={colorRef}/>
+                            </div>
+                            <div className="grid grid-cols-2 grid-flow-col gap-2">
+                                <button onClick={addCategorHandler} className="btn btn-primary-outline">Create</button>
+                                <button 
+                                    onClick={() => {
+                                        setShowAddExpense(false)
+                                    }} 
+                                    className="btn btn-danger"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 )}
 

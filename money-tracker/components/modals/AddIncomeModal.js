@@ -42,7 +42,7 @@ function AddIncomeModal({show, onClose}) {
 
     return (
         <Modal show={show} onClose={onClose}>
-        <form onSubmit={addIncomeHandler} className='flex flex-col gap-4'>
+        <form onSubmit={addIncomeHandler} className='flex flex-col gap-1'>
           <div className='input-group'>
             <label htmlFor='amount'>Income amount</label>
             <input
@@ -56,7 +56,7 @@ function AddIncomeModal({show, onClose}) {
             />
           </div>
 
-          <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-1'>
             <label htmlFor='description'>Description</label>
             <input
               name='description'
@@ -72,7 +72,7 @@ function AddIncomeModal({show, onClose}) {
           </button>
         </form>
         
-        <div className='flex flex-col gap-4 mt-6'>
+        <div className='flex flex-col gap-1 mt-6'>
           <h3 className='text-2xl font-bold'>Income History</h3>
           {income.map((i) => {
             return (
